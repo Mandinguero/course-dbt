@@ -1,5 +1,6 @@
 
 -- model: stg_greenery_addresses.sql
+-- best practices for staging: https://docs.getdbt.com/guides/best-practices/how-we-structure/2-staging
 
 {{ config (materialized='view') }}
 

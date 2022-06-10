@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: stg_tutorial__superheroes
+    description: Demographics about each superhero such as name, hair color, height and weight. 
+    columns:
+      - name: name
+        tests:
+          - not_null
+      - name: height_cm
+        tests:
+          - positive_values
+      - name: weight_lbs
+        tests:
+          - positive_values

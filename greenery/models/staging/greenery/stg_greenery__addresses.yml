@@ -1,5 +1,10 @@
 version: 2
 
+## have a source.yml for each source type (i.e. facebook, mysql, apple ads, etc)
+## each source type has a folder that contains its source.yml, and all the models from that source 
+## here src_greenery.yml contians the list of sources coming from the local postgres dbt databasedb
+
+## alternatively, each source can have its own associated source.yml file
 sources:
   - name: greenery
     database: dbt
