@@ -12,7 +12,13 @@ with products_source as (
       
       --numerics
       price,
-      inventory
+      inventory,
+
+      -- boolean
+      case
+        when inventory <= 0 then true 
+        else false
+      end as is_out_of_stock
 
     from products_source 
 )

@@ -1,0 +1,117 @@
+# Configure models' properties
+
+version: 2
+
+models:
+  # Addresses
+  - name: stg_greenery__addresses
+    description: Stage model for Delivery Addresses; UUID is unique, but rest of address can be duplicate.
+    docs:
+      show: true
+    columns: 
+      - name: address_id
+        description: Primary Key - for each address on platform
+        tests:
+          - not_null
+          - unique
+        # used to run only tests on columns with this tag: 
+        # "dbt test --select tag:my_test_tag"
+        tags: ['unique_key_tag']  
+      - name: address
+        description: The first few lines of the address
+      - name: zipcode
+        description: The zipcode of the address
+      - name: state
+        description: state this delivery address is based in
+      - name: country
+        description: country this delivery address is based in
+
+  # Users
+  - name: stg_greenery__users
+    description: Stage model for Users; User_id is unique.
+    docs:
+      show: true
+    # use meta to set metadata for a resource
+    # https://docs.getdbt.com/reference/resource-configs/meta
+    meta:
+      owner: "@iran"
+      model_maturity: in dev
+      contains_pii: true
+    columns: 
+      - name: user_id
+        description: Primary Key - for each unique user on platform
+        tests:
+          - not_null
+          - unique
+        # used to run only tests on columns with this tag: 
+        # "dbt test --select tag:my_test_tag"
+        tags: ['unique_key_tag']  
+      - name: first_name
+        description: first name of the user
+      - name: last_name
+        description: last name of the user
+      - name: email
+        description: email address of the user
+        meta:
+          contains_pii: true
+      - name: phone_number
+        description: phone number of the user
+      - name: created_at
+        description: timestamp the user was created
+      - name: updated_at
+        description: timestamp the user was last updated
+      - name: updated_at
+        description: FK - default delivery address for the user
+
+  # Promos
+  - name: stg_greenery__promos
+    description: Stage model for Promos; promo_id is unique, discount in dollars; Status active or inactive
+    docs:
+      show: true
+    columns: 
+      - name: promo_id
+        description: Primary Key - Each unique promocode on platform
+        tests:
+          - not_null
+          - unique
+      - name: discount
+        description: Absolute dollar amount that is given off with the code
+      - name: status
+        description: '{{ doc("promo_status") }}'
+        tests:
+          - not_null
+
+  # Products
+  - name: stg_greenery__products
+    description: Stage model for products;
+    docs:
+      show: true
+    columns: 
+      - name: product_id
+        description: Primary Key - Each unique product on platform
+        tests:
+          - not_null
+          - unique
+      - name: product_name
+        description: name of the product
+      - name: price
+        description: Price of the product in dollars
+        tests:
+          - not_null
+      - name: inventory
+        description: Amount of the inventory we have for this product
+        tests:
+          - not_null
+      - name: is_out_of_stock
+        description: product is out of stock
+        tests:
+          - not_null
+
+  # Orders
+  - name: stg_greenery__orders
+
+  # Order items
+  - name: stg_greenery__order_items
+
+  # Events
+  - name: stg_greenery__events
