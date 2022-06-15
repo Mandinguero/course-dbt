@@ -9,14 +9,14 @@ with addresses_source as (
     select * from {{ source ('greenery', 'addresses') }}
 )
 
-, renamed_recast as (
+, renamed as (
     select  
-     address_id,
-     address,
-     zipcode,
-     state,
-     country
+    address_id,
+    address,
+    zipcode,        --- doc: can be null for countries other than US? 
+    state,          --- doc: can be null? What about if country <> US?    
+    country
 
     from addresses_source 
 )
-select * from renamed_recast
+select * from renamed

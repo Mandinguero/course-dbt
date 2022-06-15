@@ -1,13 +1,17 @@
 {{ config (materialized='view') }}
 
 -- use a CTE to name all sources in the top of file
-with order_items as (
+with order_items_source as (
+    select * from {{ source ('greenery', 'order_items') }}
+)
 
-    select  
+, renamed as (
+ select 
       order_id,
       product_id,
       quantity
 
-    from {{ source ('greenery', 'order_items') }}
+  from order_items_source 
 )
-select * from order_items
+
+select * from renamed

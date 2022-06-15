@@ -1,14 +1,18 @@
 {{ config (materialized='view') }}
 
 -- use a CTE to name all sources in the top of file
-with promos as (
+with promos_source as (
+    select * from {{ source ('greenery', 'promos') }}
+)
 
-    select  
+, renamed as (
+
+ select 
         promo_id,
         discount,
         status 
-
-    from {{ source ('greenery', 'promos') }}
+    from promos_source 
 )
-select * from promos
 
+
+select * from renamed

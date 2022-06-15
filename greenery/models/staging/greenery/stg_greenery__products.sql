@@ -18,7 +18,7 @@ with products_source as (
       case
         when inventory <= 0 then true 
         else false
-      end as is_out_of_stock
+      end as is_out_of_stock -- new derived table; should it be in the stg layer?
 
     from products_source 
 )

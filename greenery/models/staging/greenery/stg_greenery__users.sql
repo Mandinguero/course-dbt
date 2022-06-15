@@ -6,7 +6,7 @@ with users_source as (
     select * from {{ source ('greenery', 'users') }}
 )
 
-, renamed_recast as (
+, renamed as (
 
  select 
         user_id, 
@@ -21,4 +21,4 @@ with users_source as (
 )
 
 
-select * from renamed_recast
+select * from renamed

@@ -3,9 +3,13 @@
 {{ config (materialized='view') }}
 
 -- use a CTE to name all sources in the top of file
-with events as (
+with events_source as (
+    select * from {{ source ('greenery', 'events') }}
+)
 
-    select  
+, renamed as (
+    
+    select 
         event_id,
         session_id,
         user_id,
@@ -15,6 +19,7 @@ with events as (
         order_id,
         product_id
 
-    from {{ source ('greenery', 'events') }}
+    from events_source 
 )
-select * from events
+
+select * from renamed

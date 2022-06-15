@@ -1,4 +1,6 @@
 # Configure models' properties
+# renamed file from schema_greenery.yml to models_greenery.yml
+# because it seems more informative
 
 version: 2
 
