@@ -8,6 +8,7 @@ sources:
   - name: greenery
     database: dbt
     schema: public
+
     tables:
       - name: users
       - name: orders
