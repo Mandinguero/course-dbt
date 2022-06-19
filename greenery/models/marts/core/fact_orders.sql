@@ -50,5 +50,5 @@ LEFT JOIN {{ ref('stg_greenery__promos') }}  p
   ON o.promo_id = p.promo_id
 LEFT JOIN  {{ ref('stg_greenery__addresses') }} a
   ON o.address_id = a.address_id
-LEFT JOIN  {{ ref('int_order_products') }} op
+LEFT JOIN  {{ ref('int_order_products_aggr') }} op
   ON o.order_id = op.order_id

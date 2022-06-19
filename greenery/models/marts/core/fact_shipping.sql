@@ -1,21 +1,36 @@
 -- model: fact_shipping.sql
-shipping_service
-num_orders_shipped   -- uses orders
-total_orders_usd      -- uses orders
-total_shipping_costs_usd      -- uses orders
-avg_delivery_time
-rate_on_time_delivery
 
 
 {{ config( materialized='table' )}}
+with shipping_aggr as (
 select 
-shipping_service
-, count(*) orders_done
-, sum(order_total) order_total
-, sum(shipping_cost) shipping_costs
+    shipping_service,
+    count(*)              as num_orders_shipped,
+    sum(order_total)      as order_total_usd,
+    sum(shipping_cost)    as shipping_costs_usd,
+    date_part('day',avg(delivered_at - created_at))  as avg_delivery_days,
+    avg(delivered_at - created_at)  as avg_delivery_time,
+    SUM (
+    CASE WHEN delivered_at > estimated_delivery_at  THEN 1
+	  ELSE 0
+	  END
+	      ) AS "delivered_late",
+	  SUM (
+		CASE WHEN delivered_at <= estimated_delivery_at  THEN 1
+		ELSE 0
+		END
+	      ) AS "delivered_on_time"
 
-from {{ ref('greenery', 'int_orders_extended') }}
-
+from {{ ref('greenery', 'stg_greenery__orders') }}
 group by 1
-order by 2 desc 
+)
+
+select 
+  s.*,
+    CASE WHEN (s.delivered_on_time + s.delivered_late)>0  
+         THEN (s.delivered_on_time::float/(s.delivered_on_time::float + s.delivered_late::float))::numeric(10,2)
+	  ELSE 0
+	  END AS timely_delivery_pct
+from shipping_aggr s
+
 

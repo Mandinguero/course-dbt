@@ -1,4 +1,4 @@
--- model: int_order_products.sql
+-- model: int_order_products_aggr.sql
 -- derives aggregates for each order (num of items, num distinct products)
 
 with order_counts as (

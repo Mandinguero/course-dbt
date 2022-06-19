@@ -64,7 +64,7 @@ SELECT
     uo.num_distinct_products_pruchased, 
     uo.num_items_purchased
 FROM user_address ua
-LEFT JOIN {{ ref('greenery', 'int_user_orders') }} uo 
+LEFT JOIN {{ ref('greenery', 'int_user_orders_aggr') }} uo 
  ON ua.user_id = uo.user_id
 
 )

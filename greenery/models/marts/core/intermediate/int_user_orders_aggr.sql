@@ -1,5 +1,5 @@
 
--- model: int_user_orders.sql -- generates aggregate values associated with the user orders
+-- model: int_user_orders_aggr.sql -- generates aggregate values associated with the user orders
 -- generates: 
 --- Additive values - can be rolled up. (i.e. amount_sold, quantity_sold)
 --- Semiadditive - can be added only along some of the dimensions
