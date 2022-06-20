@@ -1,0 +1,65 @@
+-- models generated with docgen: 
+-- syntax: dbt run-operation generate_model_yaml --args ...
+
+version: 2
+
+models:
+  - name: int_order_products_aggr
+    description: "aggregates number of products and total number of items sold in each order; order_id is unique"
+    columns:
+      - name: order_id
+        description: ""
+        tests:
+          - not_null
+          - unique
+        # used to run only tests on columns with this tag: 
+        # "dbt test --select tag:my_test_tag"
+        tags: ['unique_key_tag']  
+
+      - name: num_distinct_products
+        description: ""
+        # test: an order should not have 0 products
+        tests:
+          - not_null 
+          - positive_values
+      - name: num_items
+        description: ""
+
+  - name: int_user_orders_aggr
+    description: "get aggregates for user order history (count, first order, last order, lifetime order amount, etc"
+    columns:
+      - name: user_id
+        description: ""
+        tests:
+          - not_null
+          - unique
+        # used to run only tests on columns with this tag: 
+        # "dbt test --select tag:my_test_tag"
+        tags: ['unique_key_tag']  
+
+      - name: num_orders_made
+        description: ""
+        tests:
+          - positive_values
+
+      - name: first_order_timestamp_utc
+        description: ""
+
+      - name: last_order_timestamp_utc
+        description: ""
+
+      - name: avg_order_cost_usd
+        description: ""
+
+      - name: lifetime_order_amount_usd
+        description: ""
+        tests:
+          - positive_values        
+
+      - name: num_distinct_products_pruchased
+        description: ""
+
+      - name: num_items_purchased
+        description: ""
+
+  

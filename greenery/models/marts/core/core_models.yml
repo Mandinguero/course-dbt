@@ -4,65 +4,17 @@
 version: 2
 
 models:
-  - name: int_order_products_aggr
-    description: "aggregates number of products and total number of items sold in each order; order_id is unique"
-    columns:
-      - name: order_id
-        description: ""
-        tests:
-          - not_null
-          - unique
-        # used to run only tests on columns with this tag: 
-        # "dbt test --select tag:my_test_tag"
-        tags: ['unique_key_tag']  
-
-      - name: num_distinct_products
-        description: ""
-        # test: an order should not have 0 products
-        tests:
-          - not_null 
-
-      - name: num_items
-        description: ""
-
-  - name: int_user_orders_aggr
-    description: "get aggregates for user order history (count, first order, last order, lifetime order amount, etc"
-    columns:
-      - name: user_id
-        description: ""
-        tests:
-          - not_null
-          - unique
-        # used to run only tests on columns with this tag: 
-        # "dbt test --select tag:my_test_tag"
-        tags: ['unique_key_tag']  
-
-      - name: num_orders_made
-        description: ""
-
-      - name: first_order_timestamp_utc
-        description: ""
-
-      - name: last_order_timestamp_utc
-        description: ""
-
-      - name: avg_order_cost_usd
-        description: ""
-
-      - name: lifetime_order_amount_usd
-        description: ""
-
-      - name: num_distinct_products_pruchased
-        description: ""
-
-      - name: num_items_purchased
-        description: ""
-
   - name: dim_users
     description: ""
     columns:
       - name: user_id
         description: ""
+        tests:
+          - not_null
+          - unique
+        # used to run only tests on columns with this tag: 
+        # "dbt test --select tag:my_test_tag"
+        tags: ['unique_key_tag']  
 
       - name: user_email
         description: ""
@@ -102,6 +54,8 @@ models:
 
       - name: lifetime_order_amount_usd
         description: ""
+        tests:
+          - positive_values
 
       - name: num_distinct_products_pruchased
         description: ""
@@ -111,6 +65,12 @@ models:
     columns:
       - name: order_id
         description: ""
+        tests:
+          - not_null
+          - unique
+        # used to run only tests on columns with this tag: 
+        # "dbt test --select tag:my_test_tag"
+        tags: ['unique_key_tag']  
 
       - name: order_created_utc
         description: ""
@@ -150,7 +110,9 @@ models:
 
       - name: user_id
         description: ""
-
+        tests:
+          - not_null
+          
       - name: user_first_name
         description: ""
 
@@ -170,4 +132,67 @@ models:
         description: ""
 
       - name: order_delivery_country
+        description: ""
+
+  - name: dim_products
+    description: ""
+    columns:
+      - name: product_id
+        description: ""
+        tests:
+          - not_null
+          - unique
+        # used to run only tests on columns with this tag: 
+        # "dbt test --select tag:my_test_tag"
+        tags: ['unique_key_tag']  
+
+      - name: product_name
+        description: ""
+
+      - name: product_price_usd
+        description: ""
+
+      - name: product_inventory
+        description: ""
+
+      - name: is_out_of_stock
+        description: ""
+
+      - name: product_total_quantity_sold
+        description: ""
+
+      - name: product_date_most_recently_sold_at
+        description: ""
+
+      - name: repurchase_rate
+        description: ""
+
+  - name: fact_shipping
+    description: ""
+    columns:
+      - name: shipping_service
+        description: ""
+
+      - name: num_orders_shipped
+        description: ""
+
+      - name: order_total_usd
+        description: ""
+
+      - name: shipping_costs_usd
+        description: ""
+
+      - name: avg_delivery_days
+        description: ""
+
+      - name: avg_delivery_time
+        description: ""
+
+      - name: delivered_late
+        description: ""
+
+      - name: delivered_on_time
+        description: ""
+
+      - name: timely_delivery_pct
         description: ""

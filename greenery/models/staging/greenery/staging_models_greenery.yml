@@ -94,16 +94,21 @@ models:
         tests:
           - not_null
           - unique
+
       - name: product_name
         description: name of the product
+
       - name: product_price_usd
         description: Price of the product in dollars
         tests:
           - not_null
+
       - name: product_inventory
         description: Amount of the inventory we have for this product
         tests:
           - not_null
+          - positive_values          
+
       - name: is_out_of_stock
         description: product is out of stock
         tests:
@@ -111,7 +116,57 @@ models:
 
   # Orders
   - name: stg_greenery__orders
+    description: ""
+    columns:
+      - name: order_id
+        description: ""
 
+      - name: user_id
+        description: ""
+
+      - name: promo_id
+        description: ""
+
+      - name: address_id
+        description: ""
+
+      - name: tracking_id
+        description: ""
+
+      - name: order_cost
+        description: ""
+        tests:
+          - positive_values
+
+      - name: shipping_cost
+        description: ""
+        tests:
+          - positive_values
+
+      - name: order_total
+        description: ""
+        tests:
+          - positive_values
+          
+      - name: shipping_service
+        description: ""
+
+      - name: created_at
+        description: ""
+
+      - name: estimated_delivery_at
+        description: ""
+
+      - name: delivered_at
+        description: ""
+        tests:
+          - valid_delivery_date
+
+      - name: created_date
+        description: ""
+
+      - name: status
+        description: ""
   # Order items
   - name: stg_greenery__order_items
 
