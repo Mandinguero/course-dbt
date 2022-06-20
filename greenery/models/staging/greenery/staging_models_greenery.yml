@@ -119,10 +119,17 @@ models:
     description: ""
     columns:
       - name: order_id
-        description: ""
+        description: Primary Key - Each unique order on platform
+        tests:
+          - not_null
+          - unique
 
       - name: user_id
-        description: ""
+        description: " FK references users.user_id"
+        tests:
+          - relationships:
+              to: ref('stg_greenery__users')
+              field: user_id
 
       - name: promo_id
         description: ""
@@ -159,16 +166,63 @@ models:
 
       - name: delivered_at
         description: ""
-        tests:
-          - valid_delivery_date
 
       - name: created_date
         description: ""
 
       - name: status
         description: ""
+        tests:
+          - accepted_values:
+              values: ['shipped', 'preparing', 'delivered']
   # Order items
   - name: stg_greenery__order_items
+    description: ""
+    # use expression to test composite PK
+    tests:
+      - unique:
+          column_name: "(order_id || '-' || product_id)"
+    columns:
+      - name: order_id
+        description: ""
+        tests:
+          - not_null
+
+      - name: product_id
+        description: ""
+        tests:
+          - not_null
+
+      - name: quantity
+        description: ""
 
   # Events
   - name: stg_greenery__events
+    description: ""
+    columns:
+      - name: event_id
+        description: " Primary key"
+        tests:
+          - not_null
+          - unique
+
+      - name: session_id
+        description: ""
+
+      - name: user_id
+        description: ""
+
+      - name: page_url
+        description: ""
+
+      - name: created_at
+        description: ""
+
+      - name: event_type
+        description: ""
+
+      - name: order_id
+        description: ""
+
+      - name: product_id
+        description: ""

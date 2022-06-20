@@ -98,12 +98,16 @@ models:
 
       - name: order_cost_usd
         description: ""
+        tests:
+          - positive_values
 
       - name: shipping_cost_usd
         description: ""
 
       - name: order_total_usd
         description: ""
+        tests:
+          - positive_values
 
       - name: order_shipping_service
         description: ""

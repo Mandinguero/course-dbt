@@ -7,12 +7,24 @@ version: 2
 sources:
   - name: greenery
     database: dbt
+    freshness:    # default freshness for all sources here
+      warn_after: {count: 24, period: hour}       # a warning is set if sources are +24h old
+      error_after: {count: 48, period: hour}      # an error is set if sources are +48h old
+    # default expected table column that contains the load timestamp for each row
+    # if loaded_at_field is not provided, dbt will not calculate freshness for the table.
+    loaded_at_field: _etl_loaded_at   
     schema: public
 
     tables:
-      - name: users
       - name: orders
+        freshness: # table orders has more strict freshness requirements (6 hours)
+          warn_after: {count: 6, period: hour}
+          error_after: {count: 12, period: hour}
+
+      - name: users 
+        freshness: null    # do not check freshness for this table 
       - name: order_items
       - name: promos
       - name: events
       - name: products
+      - name: addresses

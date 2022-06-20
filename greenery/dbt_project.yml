@@ -25,6 +25,9 @@ clean-targets:         # directories to be removed by `dbt clean`
   - "target"
   - "dbt_packages"
 
+# variable definition reqd by the calogica/dbt_expectations package
+vars:
+  'dbt_date:time_zone': 'America/Chicago'
 
 # Configuring models
 # Full documentation: https://docs.getdbt.com/docs/configuring-models
