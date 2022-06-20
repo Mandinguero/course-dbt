@@ -96,11 +96,11 @@ models:
           - unique
       - name: product_name
         description: name of the product
-      - name: price
+      - name: product_price_usd
         description: Price of the product in dollars
         tests:
           - not_null
-      - name: inventory
+      - name: product_inventory
         description: Amount of the inventory we have for this product
         tests:
           - not_null

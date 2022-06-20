@@ -8,11 +8,11 @@ with products_source as (
 , renamed as (
     select  
       product_id,
-      name as product_name,
+      name      as product_name,
       
       --numerics
-      price,
-      inventory,
+      price     as product_price_usd,
+      inventory as product_inventory,
 
       -- boolean
       case

@@ -15,7 +15,7 @@
 --- lifetime_order_amount_usd
 
 
--- get aggregates four order history (count, first order, last order, lifetime order amount)
+-- get aggregates for order history (count, first order, last order, lifetime order amount)
 with user_orders_aggregate as (
   select 
     user_id,

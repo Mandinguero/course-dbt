@@ -1,0 +1,173 @@
+-- models generated with docgen: 
+-- syntax: dbt run-operation generate_model_yaml --args ...
+
+version: 2
+
+models:
+  - name: int_order_products_aggr
+    description: "aggregates number of products and total number of items sold in each order; order_id is unique"
+    columns:
+      - name: order_id
+        description: ""
+        tests:
+          - not_null
+          - unique
+        # used to run only tests on columns with this tag: 
+        # "dbt test --select tag:my_test_tag"
+        tags: ['unique_key_tag']  
+
+      - name: num_distinct_products
+        description: ""
+        # test: an order should not have 0 products
+        tests:
+          - not_null 
+
+      - name: num_items
+        description: ""
+
+  - name: int_user_orders_aggr
+    description: "get aggregates for user order history (count, first order, last order, lifetime order amount, etc"
+    columns:
+      - name: user_id
+        description: ""
+        tests:
+          - not_null
+          - unique
+        # used to run only tests on columns with this tag: 
+        # "dbt test --select tag:my_test_tag"
+        tags: ['unique_key_tag']  
+
+      - name: num_orders_made
+        description: ""
+
+      - name: first_order_timestamp_utc
+        description: ""
+
+      - name: last_order_timestamp_utc
+        description: ""
+
+      - name: avg_order_cost_usd
+        description: ""
+
+      - name: lifetime_order_amount_usd
+        description: ""
+
+      - name: num_distinct_products_pruchased
+        description: ""
+
+      - name: num_items_purchased
+        description: ""
+
+  - name: dim_users
+    description: ""
+    columns:
+      - name: user_id
+        description: ""
+
+      - name: user_email
+        description: ""
+
+      - name: user_first_name
+        description: ""
+
+      - name: user_last_name
+        description: ""
+
+      - name: user_phone_number
+        description: ""
+
+      - name: user_created_at_utc
+        description: ""
+
+      - name: user_updated_at_utc
+        description: ""
+
+      - name: user_created_date
+        description: ""
+
+      - name: user_updated_date
+        description: ""
+
+      - name: num_orders_made
+        description: ""
+
+      - name: first_order_timestamp_utc
+        description: ""
+
+      - name: last_order_timestamp_utc
+        description: ""
+
+      - name: avg_order_cost_usd
+        description: ""
+
+      - name: lifetime_order_amount_usd
+        description: ""
+
+      - name: num_distinct_products_pruchased
+        description: ""
+
+  - name: fact_orders
+    description: ""
+    columns:
+      - name: order_id
+        description: ""
+
+      - name: order_created_utc
+        description: ""
+
+      - name: order_created_date
+        description: ""
+
+      - name: order_tracking_id
+        description: ""
+
+      - name: estimated_delivery_at_utc
+        description: ""
+
+      - name: delivered_at_utc
+        description: ""
+
+      - name: order_status
+        description: ""
+
+      - name: delivery_status
+        description: ""
+
+      - name: days_to_deliver
+        description: ""
+
+      - name: order_cost_usd
+        description: ""
+
+      - name: shipping_cost_usd
+        description: ""
+
+      - name: order_total_usd
+        description: ""
+
+      - name: order_shipping_service
+        description: ""
+
+      - name: user_id
+        description: ""
+
+      - name: user_first_name
+        description: ""
+
+      - name: user_last_name
+        description: ""
+
+      - name: order_promo_discount
+        description: ""
+
+      - name: order_delivery_address
+        description: ""
+
+      - name: order_delivery_zipcode
+        description: ""
+
+      - name: order_delivery_state
+        description: ""
+
+      - name: order_delivery_country
+        description: ""
