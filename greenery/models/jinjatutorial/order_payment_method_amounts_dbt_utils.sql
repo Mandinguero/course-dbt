@@ -1,0 +1,21 @@
+
+-- setting vars at top helps with readability, and enables multiple references in the code.
+-- var calls a m.acro
+{% set payment_methods = dbt_utils.get_column_values(
+    table=ref('raw_payments'),
+    column='payment_method'
+    )
+ %}
+
+
+select 
+    order_id,
+    sum(amount) as total_amount,
+    {% for payment_method in payment_methods %}
+        sum(case when payment_method = '{{payment_method}}' then amount end) as {{payment_method}}_amount
+    -- to avoid trailing comma problems: use if stmt as below
+    {% if not loop.last %},{% endif %}
+    {% endfor %}
+from {{ ref('raw_payments') }}
+group by 1
+

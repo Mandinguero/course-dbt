@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: jinjatutorial
+    database: dbt
+    schema: dbt_iran_r
+
+    tables:
+      - name: raw_payments

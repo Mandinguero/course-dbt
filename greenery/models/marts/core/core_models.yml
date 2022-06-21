@@ -77,6 +77,18 @@ models:
 
       - name: order_created_date
         description: ""
+        # dbt_utils generic test: accepted_range()
+        # Check that a column's values fall inside an expected range. 
+        # Any combination of min_value and max_value is allowed, and the range can be inclusive or exclusive. 
+        # Provide a where argument to filter to specific records only.
+        
+        # In addition to comparisons to a scalar value, you can also compare to another column's values.
+        # Any data type that supports the > or < operators can be compared, 
+        # so you could also run tests like checking that all order dates are in the past.
+        tests:
+          - dbt_utils.accepted_range:
+              max_value: current_date
+              #inclusive is true by default
 
       - name: order_tracking_id
         description: ""
@@ -89,12 +101,17 @@ models:
 
       - name: order_status
         description: ""
+        tests:
+          - accepted_values:
+              values: ['shipped', 'preparing', 'delivered']
 
       - name: delivery_status
         description: ""
 
       - name: days_to_deliver
         description: ""
+        tests:
+          - positive_values
 
       - name: order_cost_usd
         description: ""
@@ -103,6 +120,10 @@ models:
 
       - name: shipping_cost_usd
         description: ""
+        tests:
+          - dbt_utils.accepted_range:   ## shipping costs must be greater than 0 (numbers only?)
+              min_value: 0
+              inclusive: true
 
       - name: order_total_usd
         description: ""
@@ -158,6 +179,10 @@ models:
 
       - name: product_inventory
         description: ""
+        tests:
+          - dbt_utils.accepted_range:   ## shipping costs must be greater than 0 (numbers only?)
+              min_value: 0
+              inclusive: true
 
       - name: is_out_of_stock
         description: ""

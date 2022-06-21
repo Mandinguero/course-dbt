@@ -1,5 +1,6 @@
 -- model: int_order_products_aggr.sql
 -- derives aggregates for each order (num of items, num distinct products)
+{{ config( materialized='table' ) }}
 
 with order_counts as (
   select

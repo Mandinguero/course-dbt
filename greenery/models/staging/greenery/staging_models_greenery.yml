@@ -106,6 +106,9 @@ models:
       - name: product_inventory
         description: Amount of the inventory we have for this product
         tests:
+          - dbt_utils.accepted_range:   ## product inventory must be equal or greater than 0 (numbers only?)
+              min_value: 0
+              inclusive: true
           - not_null
           - positive_values          
 

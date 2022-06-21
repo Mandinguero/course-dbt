@@ -19,7 +19,7 @@ SELECT
           (date_part('day',(delivered_at - estimated_delivery_at))< 0)) THEN 'early'
     ELSE 'N/A'
   END delivery_status,
-  o.delivered_at - o.created_at AS days_to_deliver,
+  (EXTRACT (day FROM (o.delivered_at - o.created_at)))::integer AS days_to_deliver,
 
   -- numerics
   o.order_cost        as order_cost_usd,
