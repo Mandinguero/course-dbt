@@ -62,4 +62,20 @@ models:
       - name: num_items_purchased
         description: ""
 
-  
+  - name: int_session_event_types
+    description: ""
+    columns:
+      - name: session_id
+        description: ""
+
+      - name: add_to_cart_present
+        description: ""
+
+      - name: checkout_present
+        description: ""
+
+      - name: page_view_present
+        description: ""
+
+      - name: package_shipped_present
+        description: ""  

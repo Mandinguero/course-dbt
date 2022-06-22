@@ -15,7 +15,7 @@ with sessions_aggregated as (
     
     -- iteract through the event types to build a case statement
     {% for event_type in event_types['event_type'] %}
-       MAX(case when event_type = '{{event_type}}' then 1 else 0 end) as {{event_type}}_num_events
+       count(case when event_type = '{{event_type}}' then 1 else 0 end) as {{event_type}}_num_events
     -- to avoid trailing comma problems: use if stmt as below
     {% if not loop.last %},{% endif %}
     {%  endfor %}

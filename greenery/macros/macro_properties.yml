@@ -1,0 +1,27 @@
+version: 2
+
+macros:
+  - name: get_column_values(column_name, relation)
+    description: > 
+      generic macro/function; returns a list of distinct values contained within
+      a column (column_name is a parameter) of a given table (relation/table is a parameter) 
+    docs:
+      show: true
+    arguments:
+      - name: column_name
+        type: column name or expression on columns
+        description: "The name of a column, or an expression — anything that can be `select`-ed as a column"
+
+      - name: relation
+        type: table or view name
+        description: "The name of table or view where the column or column expression can be found"
+
+  - name: cents_to_dollars (column_name, scale=2)
+    arguments:
+      - name: column_name
+        type: column name or expression
+        description: "Should be a column or col expression that represents a value in cents"
+
+      - name: scale
+        type: integer
+        description: "The number of decimal places to round to. Default is 2."  
