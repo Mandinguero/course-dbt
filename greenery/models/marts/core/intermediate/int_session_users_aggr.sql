@@ -9,8 +9,9 @@ with sessions_aggregated as (
   select 
     session_id, 
     user_id,
-    min(created_at) session_start,
-    max(created_at) session_stop,
+    min(created_at) session_start_at,
+    max(created_at) session_stop_at,
+    -- product_id can be null for checkout and package_shipped events
     count(distinct product_id) products_touched, 
     
     -- iteract through the event types to build a case statement
@@ -25,8 +26,16 @@ with sessions_aggregated as (
 )
 
 select 
-    e.*,
-    e.session_stop - e.session_start as session_duration,
-    case when checkout_num_events = 0 then 1 else 0 end non_paying_session
+    e.session_id,
+    e.user_id,
+    e.session_start_at,
+    e.session_stop_at,
+    e.products_touched,
+    e.add_to_cart_num_events,
+    e.page_view_num_events,
+    e.checkout_num_events,
+    e.package_shipped_num_events,
+    e.session_stop_at - e.session_start_at as session_duration,
+    case when checkout_num_events = 0 then 1 else 0 end no_checkout_session
 
  from sessions_aggregated e

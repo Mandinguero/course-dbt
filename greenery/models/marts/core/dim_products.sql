@@ -10,12 +10,13 @@ product_is_out_of_stock
 product_date_most_recently_sold -- uses orders and order_items
 product_total_num_purchases     -- uses orders and order_items
 product_repurchase_rate -- num_repeated_purchases/total_num_purchases
--- from int_product_events
+-- from int_product_events_aggr
 product_num_page_views
 Product_num_add_to_cart
 product_num_checkouts
 Product_num_shipments -- package_shipped
 Product_checkout_rate -- num_checkouts/num_add_to_cart
+Product_conversion_rate -- num_product_views/num_product_checkouts
 */
 
 -- basic product information
@@ -57,8 +58,8 @@ product_most_recent_sale as (
     o.user_id,
     oi.product_id,
     count(oi.product_id) as product_count
-  from dbt_iran_r.stg_greenery__orders o
-  left join dbt_iran_r.stg_greenery__order_items oi 
+  from {{ ref ('greenery','stg_greenery__orders') }} o
+  left join {{ ref ('greenery','stg_greenery__order_items') }} oi
   on o.order_id = oi.order_id
   group by o.user_id, oi.product_id
 ),
