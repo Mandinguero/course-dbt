@@ -16,6 +16,14 @@ macros:
         type: table or view name
         description: "The name of table or view where the column or column expression can be found"
 
+  - name: get_event_types_macro
+    description: > 
+      generic macro/function; calls the generic macro get_column_values to return 
+      the list of distinct values contained in a column. 
+      No parameters. The macro uses a hard-coded set of parameters to the generic macro. 
+    docs:
+      show: true
+
   - name: cents_to_dollars (column_name, scale=2)
     arguments:
       - name: column_name

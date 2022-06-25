@@ -28,6 +28,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 # on-run-end hooks: - SQL stmts executed after ALL models, seeds or snapshots run
 on-run-end:
   - "GRANT USAGE ON SCHEMA {{ target.schema }} to  test_for_hooks "
+  - "GRANT USAGE ON SCHEMA {{ target.schema }} to  reporting "
 
 # variable definition reqd by the calogica/dbt_expectations package
 vars:
@@ -42,9 +43,10 @@ vars:
 models:
   greenery:
     # Config indicated by + and applies to all files under models/example/
-    example:
-      +materialized: view
     staging:
       +materialized: view
     marts:
       +materialized: table
+  post-hook:
+    - "GRANT SELECT ON {{ this }} TO test_for_hooks" 
+    - "GRANT SELECT ON {{ this }} TO reporting" 
