@@ -1,6 +1,7 @@
 
 -- model: int_product_events_checkout_shipped
 
+{{ config( materialized='table' ) }}
 
 -- sessions that checked out products 
 with sessions_that_checked_out_product as (

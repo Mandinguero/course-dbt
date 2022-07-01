@@ -1,0 +1,24 @@
+version: 2
+
+exposures:  
+  - name: Product Funnel Dashboard
+    description: >
+      Models that are critical to our product funnel dashboard
+    type: dashboard
+    maturity: high
+    owner:
+      name: Iran Rodrigues
+      email: iran@greenery.com
+    depends_on:
+      - ref('fact_products_events')
+
+  - name: Overall Site Session Funnel Dashboard
+    description: >
+      Models that are critical to our Session funnel dashboard
+    type: dashboard
+    maturity: high
+    owner:
+      name: Iran Rodrigues
+      email: iran@greenery.com
+    depends_on:
+      - ref('overall_product_funnel')

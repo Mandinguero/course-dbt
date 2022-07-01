@@ -10,11 +10,7 @@
 
 
 
-{{
-  config(
-    materialized='table'
-  )
-}}
+{{ config( materialized='table' ) }}
 
 -- get user basic info and address info
 with user_address as (

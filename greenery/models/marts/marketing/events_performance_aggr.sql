@@ -8,7 +8,7 @@ select
     e.user_id,
     e.session_start_at,
     e.session_stop_at,
-    e.products_touched,
+    e.num_products_viewed,
     e.add_to_cart_num_events,
     e.page_view_num_events,
     e.checkout_num_events,

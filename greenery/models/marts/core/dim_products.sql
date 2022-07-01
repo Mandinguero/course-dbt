@@ -1,23 +1,4 @@
 -- model: dim_products.sql
--- COLUMS:
-/*
-product_id
-product_name
-product_price_usd
-product_inventory
-product_is_out_of_stock
--- calculated
-product_date_most_recently_sold -- uses orders and order_items
-product_total_num_purchases     -- uses orders and order_items
-product_repurchase_rate -- num_repeated_purchases/total_num_purchases
--- from int_product_events_aggr
-product_num_page_views
-Product_num_add_to_cart
-product_num_checkouts
-Product_num_shipments -- package_shipped
-Product_checkout_rate -- num_checkouts/num_add_to_cart
-Product_conversion_rate -- num_product_views/num_product_checkouts
-*/
 
 -- basic product information
 with product_base as (

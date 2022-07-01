@@ -1,9 +1,5 @@
 -- model: int_product_events_aggr.sql
-
-/*  set event_types = 
-    dbt_utils.get_query_results_as_dict("select distinct event_type from" ~ ref('greenery','stg_greenery__events'))  
-
-*/
+{{ config( materialized='table' ) }}
 
 -- Call to macro get_event_types_macro() (--> calls get_column_values()) to return 
 -- a LIST (not dict) of event types and set variable.
@@ -23,28 +19,23 @@ with num_event_type_per_product as (
   from {{ ref('greenery', 'stg_greenery__events') }} e
   where e.product_id is not null
   group by e.product_id
-),
-
-product_events_checkout_shipped as (
-  select
-    product_id, 
-    num_checkouts,
-    num_package_shipped
-  from {{ ref('greenery', 'int_product_events_checkout_shipped') }} 
 )
 
- 
--- list number of
-select
+-- aggregating by product
+select 
   e.product_id,
+  pecs.product_name,
   e.product_num_page_view,
   e.product_num_add_to_cart,
-  pecs.num_checkouts,
-  pecs.num_package_shipped,
+  pecs.quantity_sold,
+  pecs.expected_revenue_usd,
+  pecs.num_times_ordered as num_checkouts,
+  pecs.num_users_ordered,
+  pecs.last_ordered,
   -- Product_checkout_rate -- num_checkouts/num_add_to_cart
-  (pecs.num_checkouts::float/e.product_num_add_to_cart::float)::numeric(10,2) as product_checkout_rate,
+  (pecs.num_times_ordered::float/e.product_num_add_to_cart::float)::numeric(10,2) as product_checkout_rate,
   -- Product_conversion_rate -- num_product_checkouts/num_product_views
-  (pecs.num_checkouts::float/e.product_num_page_view::float)::numeric(10,2) as product_conversion_rate
+  (pecs.num_times_ordered::float/e.product_num_page_view::float)::numeric(10,2) as product_conversion_rate
 from num_event_type_per_product e
-left outer join product_events_checkout_shipped pecs
+left outer join {{ ref('greenery', 'int_products_per_order_aggr') }}   pecs
  on e.product_id = pecs.product_id
