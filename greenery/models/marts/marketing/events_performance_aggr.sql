@@ -16,7 +16,7 @@ select
     e.session_stop_at - e.session_start_at as session_duration,
     case when checkout_num_events = 0 then 1 else 0 end no_checkout_session
 
- from {{ ref('greenery', 'int_session_users_aggr') }}  e
+ from {{ ref('greenery', 'int_sessions_users_aggr') }}  e
 
 )
 

@@ -1,4 +1,6 @@
 -- model: int_session_event_types.sql
+
+-- number of distinct event types per session id
 {{ config( materialized='table' ) }}
 
 {% set event_types = 

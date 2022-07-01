@@ -1,4 +1,4 @@
--- model: int_session_users_aggr.sql
+-- model: int_sessions_users_aggr.sql
 
 {{ config( materialized='table' ) }}
 {% set event_types = 
@@ -12,11 +12,14 @@ with sessions_aggregated as (
     min(created_at) session_start_at,
     max(created_at) session_stop_at,
     -- product_id can be null for checkout and package_shipped events
-    count(distinct product_id) products_touched, 
-    
+    count(distinct product_id) num_products_viewed, 
+    -- how many "actions" the session had (page_views, add_to_cart, etc)
+    count(event_id) as num_events_in_session,
+    -- did the session had 0, 1 or more orders? 
+    count(distinct order_id) as num_session_orders,
     -- iteract through the event types to build a case statement
     {% for event_type in event_types['event_type'] %}
-       count(case when event_type = '{{event_type}}' then 1 else 0 end) as {{event_type}}_num_events
+      sum(case when event_type = '{{event_type}}' then 1 else 0 end) as {{event_type}}_num_events
     -- to avoid trailing comma problems: use if stmt as below
     {% if not loop.last %},{% endif %}
     {%  endfor %}
@@ -30,7 +33,9 @@ select
     e.user_id,
     e.session_start_at,
     e.session_stop_at,
-    e.products_touched,
+    e.num_products_viewed,
+    e.num_events_in_session,
+    e.num_session_orders,
     e.add_to_cart_num_events,
     e.page_view_num_events,
     e.checkout_num_events,
