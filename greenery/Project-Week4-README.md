@@ -65,13 +65,15 @@ __Product conversion rates/Product funnel:__
 
 
 
-##### _(3) Why might certain products be converting at higher/lower rates than others?_
-- Product landing page may need improvement
-- Promotions or other forms of increased visibility may improve the conversion rate of some products
+###### _(3A-1) if your organization is thinking about using dbt, how would you pitch the value of dbt/analytics engineering to a decision maker at your organization?_
+-  Dbt allows the organization to implement good software development practices when working with *data*. It is amazing to be able to easily have a large team collaborating on a data project and managing sql code in a version control system such as git. 
+-  Also the fact that each developer can have their own version of the data to work with, facilitated by the data sharing features of data platforms such as snowflake at minimum cost can be very empowering. 
+-  Moving to a modern data stack as made possible by dbt and snowflake also makes it much easier to overcome data silos within the organization. This makes the establishment of a *"true"* single source of "truth" more likely to succeed.
 
-##### _(4)  Create a macro to simplify part of a model(s)_
-- Added the generic macro ```get_column_values```
-- Added the specific macro ```get_event_types_macro```
-- Refactored the model ```int_session_event_types```
+
+###### _(3A-2)  if your organization is using dbt, what are 1-2 things you might recommend based on learning from this course?_
+- The development of and commitment to best practices is clearly important for the success of a project using dbt. It may be quite easy to go down a road marked by lots of repeated code, incorrectly documented models, and super convoluted dags.
+- Breaking the DRY best practice rule may be especially high when designing *intermediate models*. They are also important to implementing true data sharing and overcoming organizational data silos: it may be easier to go down a path where different groups produce their own "version of the truth." 
+- Automating and orchestrating data loads, tests, etc. For example, without successful orchestration it may be possible - when loading data from different sources - to end up with temporarily inconsistent data in the platform.
 
 
