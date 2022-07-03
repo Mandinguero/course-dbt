@@ -64,6 +64,7 @@ __Product conversion rates/Product funnel:__
 - Model ``overall_product_funnel`` implements greenery overall conversion rates/product funnel
 
 
+
 ##### _(3) Why might certain products be converting at higher/lower rates than others?_
 - Product landing page may need improvement
 - Promotions or other forms of increased visibility may improve the conversion rate of some products
@@ -74,42 +75,3 @@ __Product conversion rates/Product funnel:__
 - Refactored the model ```int_session_event_types```
 
 
-##### _(5) Add a post-hook to your project to apply grants to the role “reporting”._
-
-- ```end-of-run``` hook added to the project
-- ```Post-hook``` added to the project
-
-```sh
-# create to new roles
-gitpod /workspace/course-dbt/greenery $ psql
-postgres=# create role test_for_hooks;
-CREATE ROLE
-postgres=# create role reporting;
-CREATE ROLE
-
-# list existing roles
-postgres=# \du
-                                      List of roles
-   Role name    |                         Attributes                         | Member of 
-----------------+------------------------------------------------------------+--------
- gitpod         | Superuser, Create role, Create DB, Replication, Bypass RLS | {}
- reporting      | Cannot login                                               | {}
- test_for_hooks | Cannot login                                               | {}
-
-
-# On file: dbt-project.yml:
-(..)
-models:
-  greenery:
-    Post-hook:
-      - "GRANT SELECT ON {{ this }} TO reporting"
-  
-on-run-end:
- - "GRANT USAGE ON SCHEMA {{ schema }} TO reporting
-(..)
-```
-
-##### _(6) Install a package and apply macros to your project_
-
-- ```dbt-utils``` installed
-- Using ```dbt-utils.get_query_results_as_dict``` on model: ```int_session_event_types```
