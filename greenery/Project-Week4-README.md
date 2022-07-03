@@ -77,3 +77,8 @@ __Product conversion rates/Product funnel:__
 - Automating and orchestrating data loads, tests, etc. For example, without successful orchestration it may be possible - when loading data from different sources - to end up with temporarily inconsistent data in the platform.
 
 
+###### _(3A-3)  if you are thinking about moving to analytics engineering, what skills have you picked that give you the most confidence in pursuing this next step?_
+
+- Learning dbt has been a GREAT experience. The course is great. Thank you! :) 
+- I also understood that good SQL skills are very important; so are solid software engineering practices.
+- A solid understanding of dimensional modeling and analysis is also very important.
